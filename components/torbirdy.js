@@ -703,17 +703,17 @@ TorBirdy.prototype = {
         ["mail.smtpserver.%smtp%.try_ssl", 3], // SSL/TLS
       ];
       for (let i = 0; i < smtpAccounts.length; i++) {
-        for each (var [pref_template, value] in smtpPrefs) {
-          let pref = pref_template.replace("%smtp%", smtpAccounts[i]);
-          if (this.prefs.prefHasUserValue(pref)) {
-            let currentPref = Preferences.get(pref);
-            // Save the values so that we can restore them later.
-            Preferences.set(kRestoreBranch + pref, currentPref);
-            TorBirdyOldPrefs.push(pref);
-            Preferences.set(pref, value);
+        for (let [pref_template, value] in smtpPrefs) {
+            let pref = pref_template.replace("%smtp%", smtpAccounts[i]);
+            if (this.prefs.prefHasUserValue(pref)) {
+              let currentPref = Preferences.get(pref);
+              // Save the values so that we can restore them later.
+              Preferences.set(kRestoreBranch + pref, currentPref);
+              TorBirdyOldPrefs.push(pref);
+              Preferences.set(pref, value);
+            }
           }
         }
-      }
     }
     this.prefs.setBoolPref("extensions.torbirdy.first_run", false);
   },
